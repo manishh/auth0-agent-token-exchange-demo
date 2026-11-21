@@ -4,6 +4,7 @@ import sys
 
 from dotenv import load_dotenv
 
+# Load settings from `.env` and check that all required ones are present.
 load_dotenv()
 
 REQUIRED = [

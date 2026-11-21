@@ -100,7 +100,7 @@ cp .env.example .env             # then fill in your values
 python run_demo.py
 ```
 
-Success looks like this.
+A successful run prints this at the end:
 
 ```
 RESULT: ALL 11 CHECKS PASSED

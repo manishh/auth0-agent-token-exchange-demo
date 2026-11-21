@@ -1,6 +1,6 @@
 # Extra experiment: Does the parent token limit what gets issued?
 
-This optional experiment shows why the Action's checks matter. It is not part of the main demo.
+This optional experiment shows why the Action's checks matter. It is not part of the main demo. Read on if you're curious:
 
 **The question:** 
 
