@@ -78,8 +78,8 @@ def main():
             f"{lifetime_of(sub)}s vs {lifetime_of(parent)}s",
         )
         check(
-            "act claim names the parent agent",
-            (sub.get("act") or {}).get("sub") == config.CLIENT_ID,
+            "act claim names the search sub-agent",
+            (sub.get("act") or {}).get("sub") == config.SUB_AGENT_ID,
             f"act={sub.get('act')}",
         )
         check("no refresh token issued", "refresh_token" not in body)
