@@ -67,12 +67,8 @@ agent-token-exchange-demo/
 ├── config.py                             Loads and checks settings
 ├── auth0_client.py                       Login, token exchange, and claim decoding helpers
 ├── run_demo.py                           The demo
-├── auth0_action/                         Action code for the Auth0 Dashboard (does not run locally)
-│   └── custom_token_exchange_action.js
-└── extras/                               Optional experiment about extra scopes
-    ├── __init__.py
-    ├── README.md
-    └── probe.py
+└── auth0_action/                         Action code for the Auth0 Dashboard (does not run locally)
+   └── custom_token_exchange_action.js
 ```
 
 ## Auth0 setup checklist
@@ -100,7 +96,7 @@ cp .env.example .env             # then fill in your values
 python run_demo.py
 ```
 
-Success looks like this.
+A successful run prints this at the end:
 
 ```
 RESULT: ALL 11 CHECKS PASSED
@@ -112,10 +108,6 @@ RESULT: ALL 11 CHECKS PASSED
 - **HTTP 500 "server_error".** The Action code has an error. Re-check the pasted code and redeploy.
 - **Any other exchange failure.** Open *Monitoring > Logs* in the Auth0 Dashboard and look for `fecte` entries.
 - **Lifetime check fails.** Lower the token expiration on the Search Sub-Agent API.
-
-## Extras
-
-See [`extras/README.md`](extras/README.md) for an optional experiment about what happens when a sub-agent asks for a scope the parent never held.
 
 ## ⚠️ Demo-only shortcuts
 

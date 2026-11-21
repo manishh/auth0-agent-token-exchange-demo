@@ -1,11 +1,15 @@
 """Small helpers for the two Auth0 calls used in the demo."""
+from jwt import PyJWKClient
 import jwt
 import requests
 
 import config
 
+# Fetches and caches the tenant's public signing keys
+_jwks_client = PyJWKClient(f"https://{config.AUTH0_DOMAIN}/.well-known/jwks.json")
+
 TIMEOUT_SECONDS = 30
-TOKEN_EXCHANGE_GRANT = "urn:ietf:params:oauth:grant-type:token-exchange"
+TOKEN_EXCHANGE_GRANT = "urn:ietf:params:oauth:grant-type:token-exchange"    # specified by  RFC 8693
 
 
 def get_parent_token() -> str:
@@ -51,10 +55,23 @@ def exchange_token(subject_token: str, audience: str, scope: str):
     return response.status_code, response.json()
 
 
+def verify_claims(token: str, audience: str) -> dict:
+    """Verify the signature, issuer, audience, and expiry, then return the claims."""
+    signing_key = _jwks_client.get_signing_key_from_jwt(token)
+    return jwt.decode(
+        token,
+        signing_key.key,
+        algorithms=["RS256"],          # always pin the algorithm
+        audience=audience,
+        issuer=f"https://{config.AUTH0_DOMAIN}/",   # note the trailing slash
+        leeway=10,                     # allow a few seconds of clock skew
+    )
+
+#  Only for debugging, not for production use:
 def decode_claims(token: str) -> dict:
     """Decode a token's claims for display only.
 
-    Signature verification is switched off on purpose. Never use this
+    Signature verification is switched off for debugging purposes. Never use this
     for authorization decisions.
     """
     return jwt.decode(token, options={"verify_signature": False})

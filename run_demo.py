@@ -6,7 +6,7 @@ Every check prints PASS or FAIL. The exit code is 0 only if all checks pass.
 import sys
 
 import config
-from auth0_client import decode_claims, exchange_token, get_parent_token
+from auth0_client import verify_claims, exchange_token, get_parent_token
 
 results = []
 
@@ -42,7 +42,7 @@ def main():
         print("and the test user's credentials in .env.")
         sys.exit(1)
 
-    parent = decode_claims(parent_token)
+    parent = verify_claims(parent_token, config.PARENT_API)
     expected_scopes = {"email:read", "files:read", "search:web"}
     check(
         "audience is the Research Agent API",
@@ -61,7 +61,7 @@ def main():
     exchanged = status == 200
     check("exchange succeeded", exchanged, f"HTTP {status}")
     if exchanged:
-        sub = decode_claims(body["access_token"])
+        sub = verify_claims(body["access_token"], config.SEARCH_API)
         check(
             "audience is the Search Sub-Agent API",
             config.SEARCH_API in audiences_of(sub),
