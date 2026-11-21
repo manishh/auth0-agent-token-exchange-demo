@@ -35,3 +35,4 @@ TEST_USER = os.environ["TEST_USER"]
 TEST_PASSWORD = os.environ["TEST_PASSWORD"]
 
 TOKEN_URL = f"https://{AUTH0_DOMAIN}/oauth/token"
+SUB_AGENT_ID="search-sub-agent"

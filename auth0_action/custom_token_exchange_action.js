@@ -30,6 +30,9 @@
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
 
+// User given name for the sub-agent for the demo
+const SUB_AGENT_ID = "search-sub-agent";
+
 // REPLACE: your tenant domain, no https:// and no trailing slash
 const DOMAIN = 'YOUR_TENANT.us.auth0.com';
 
@@ -65,6 +68,7 @@ exports.onExecuteCustomTokenExchange = async (event, api) => {
     [event.secrets.PARENT_CLIENT_ID]: {
       audience: SEARCH_API,
       scopes: ['search:web'],
+      actor: SUB_AGENT_ID,
     },
   };
 
@@ -92,6 +96,6 @@ exports.onExecuteCustomTokenExchange = async (event, api) => {
   }
 
   // 3. Record the acting agent, then approve the exchange for the same user
-  api.authentication.setActor({ sub: event.client.client_id });
+  api.authentication.setActor({ sub: rule.actor });
   api.authentication.setUserById(parent.sub);
 };

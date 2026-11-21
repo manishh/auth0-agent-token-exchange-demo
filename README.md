@@ -15,7 +15,7 @@ flowchart TD
     U["👤 User"]
     P["🧠 Parent agent<br/>holds a broad token<br/>📧 email · 📁 files · 🔎 search"]
     S["🤖 Search sub-agent"]
-    N["🎟️ Narrow token<br/>🔎 search:web only<br/>⏱️ short-lived<br/>🏷️ act = parent agent"]
+    N["🎟️ Narrow token<br/>🔎 search:web only<br/>⏱️ short-lived<br/>🏷️ act = search-sub-agent"]
     D["🚫 Request refused"]
 
     U -->|"logs in"| P
